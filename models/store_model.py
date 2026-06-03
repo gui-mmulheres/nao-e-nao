@@ -84,6 +84,7 @@ class StoreModel(db.Model):
         loja.tem_info_canais = params['tem_info_canais']
         loja.tem_monitor_imagem = params['tem_monitor_imagem']
         loja.tem_sinal_sanitario = params['tem_sinal_sanitario']
+        loja.pessoas.clear()
 
         db.session.commit()
 

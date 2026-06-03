@@ -46,13 +46,14 @@ class PersonModel(db.Model):
             return nova_pessoa
         else:
             pessoa_atualizada = PersonModel.atualiza_pessoa(
-                pessoa_encontrada, pessoa)
+                pessoa_encontrada, pessoa, loja)
             return pessoa_atualizada
 
     @staticmethod
-    def atualiza_pessoa(pessoa, params):
+    def atualiza_pessoa(pessoa, params, loja):
         pessoa.nome = params['nome']
         pessoa.certificado = params['certificado']
+        pessoa.lojas.append(loja)
 
         db.session.commit()
 

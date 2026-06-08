@@ -1,4 +1,5 @@
 import logging
+from typing import cast
 from flask import abort, jsonify, make_response, request
 from models.person_model import PersonModel
 from models.store_model import StoreModel
@@ -16,7 +17,8 @@ def index():
     try:
         form_tratado = valida_formulario()
         loja = cadastra_banco(form_tratado)
-        processa_selo_task.delay(loja.cnpj, loja.email)
+        params = monta_task(loja)
+        processa_selo_task.delay(params)
     except Exception as e:
         logger.exception(str(e))
         db.session.rollback()
@@ -24,6 +26,25 @@ def index():
     response['status'] = 200
     response['message'] = 'Sucesso'
     return make_response(jsonify(response))
+
+
+def monta_task(loja: StoreModel):
+    params = {
+        "cnpj": loja.cnpj,
+        "email": loja.email,
+        "razao_social": loja.razao_social,
+        "pessoas": []
+    }
+
+    loja_pessoas = cast(list, loja.pessoas)
+
+    for pessoa in loja_pessoas:
+        params["pessoas"].append({
+            "nome": pessoa.nome,
+            "certificado": pessoa.certificado
+        })
+
+    return params
 
 
 def valida_formulario():

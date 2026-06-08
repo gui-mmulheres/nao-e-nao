@@ -8,10 +8,10 @@ from services.gera_pdf import converte_pdf
 logger = logging.getLogger(__name__)
 
 @celery.task
-def processa_selo_task(cnpj, email):
+def processa_selo_task(params):
     try:
-        preenche_modelo(cnpj)
+        preenche_modelo(params)
         converte_pdf()
-        gera_email(cnpj, email)
+        gera_email(params['cnpj'], params['email'])
     except Exception as e:
         logger.exception(str(e))

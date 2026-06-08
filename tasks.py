@@ -7,6 +7,7 @@ from services.gera_pdf import converte_pdf
 
 logger = logging.getLogger(__name__)
 
+
 @celery.task
 def processa_selo_task(params):
     try:

@@ -10,7 +10,8 @@ def inicializa_env():
         'output_dir': os.getenv("OUTPUT_DIR"),
         'client_id': os.getenv("CLIENT_ID"),
         'tenant_id': os.getenv("TENANT_ID"),
-        'cache_key': os.getenv("CACHE_KEY")
+        'cache_key': os.getenv("CACHE_KEY"),
+        'url_validador': os.getenv("URL_VALIDADOR")
     }
 
     return env

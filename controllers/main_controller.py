@@ -4,6 +4,7 @@ from flask import abort, jsonify, make_response, request
 from models.person_model import PersonModel
 from models.store_model import StoreModel
 from scripts.env_services import inicializa_env
+from services.valida_certificado import valida_certificado
 from tasks import processa_selo_task
 from json import loads
 from db import db
@@ -119,15 +120,7 @@ def cadastra_banco(loja):
 
 
 def cadastra_pessoa(pessoa, loja):
-    certificado_valido = valida_certificado(pessoa['certificado'])
-
-    if not certificado_valido:
-        raise Exception('Certificado Inválido')  # NOSONAR
+    valida_certificado(pessoa)
 
     PersonModel.cadastra_pessoa(pessoa, loja)
 
-
-def valida_certificado(certificado):
-    # acessa url
-    print(certificado)
-    return True

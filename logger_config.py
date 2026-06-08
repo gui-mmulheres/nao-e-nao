@@ -3,8 +3,6 @@ import os
 from logging.handlers import RotatingFileHandler
 
 def setup_logger():
-    os.makedirs("logs", exist_ok=True)
-
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
@@ -16,20 +14,22 @@ def setup_logger():
         "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
     )
 
-    # Arquivo com rotação
-    file_handler = RotatingFileHandler(
-        "logs/api.log",
+    # Console (INFO+)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(formatter)
+
+    # Arquivo de erros na raiz do projeto
+    error_handler = RotatingFileHandler(
+        "erros.log",
         maxBytes=10 * 1024 * 1024,  # 10 MB
         backupCount=5,
         encoding="utf-8"
     )
-    file_handler.setFormatter(formatter)
+    error_handler.setLevel(logging.ERROR)
+    error_handler.setFormatter(formatter)
 
-    # Console
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-
-    logger.addHandler(file_handler)
     logger.addHandler(console_handler)
+    logger.addHandler(error_handler)
 
     return logger

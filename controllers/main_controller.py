@@ -33,7 +33,7 @@ def index():
 
 def monta_task(loja: StoreModel):
     params = {
-        "cnpj": formatar_cnpj(loja.cnpj),
+        "cnpj": loja.cnpj,
         "email": loja.email,
         "razao_social": loja.razao_social,
         "pessoas": []
@@ -62,7 +62,6 @@ def valida_formulario():
         "nome_fantasia": store_data['q4_nome_fantasia'],
         "razao_social": store_data['q5_razao_social'],
         "email": store_data['q42_email'],
-        "tipo_loja": store_data['q7_tipo_loja'],
         "endereco": store_data['q8_endereco'],
         "numero_end": store_data['q9_numero_end'],
         "bairro": store_data['q10_bairro'],
@@ -70,6 +69,11 @@ def valida_formulario():
         "uf": store_data['q12_uf'],
         "quant_pessoa_qualificada": int(store_data['q16_quant_pessoa_qualificada'])
     }
+
+    if isinstance(store_data['q7_tipo_loja'], dict):
+        loja['tipo_loja'] = store_data['q7_tipo_loja']['other']
+    else:
+        loja['tipo_loja'] = store_data['q7_tipo_loja']
 
     loja['tem_pessoa_qualificada'] = valida_criterio(
         store_data['q15_tem_pessoa_qualificada'], ERROR2.format(cnpj=formatar_cnpj(store_data['q3_cnpj'])))

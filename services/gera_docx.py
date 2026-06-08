@@ -2,6 +2,7 @@ from pathlib import Path
 from docxtpl import DocxTemplate
 from constants.errors import ERROR6, ERROR7
 from scripts.env_services import inicializa_env
+from utils.cnpj import formatar_cnpj
 
 env = inicializa_env()
 
@@ -13,7 +14,7 @@ def preenche_modelo(params):
 
         filename = Path(str(env['output_dir'])) / f"{params['cnpj']}.docx"
         data = {}
-        data['cnpj'] = params['cnpj']
+        data['cnpj'] = formatar_cnpj(params['cnpj'])
         data['razao_social'] = params['razao_social']
         data['pessoas'] = params['pessoas']
 

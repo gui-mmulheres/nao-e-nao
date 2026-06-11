@@ -47,7 +47,6 @@ def valida_formulario():
     valida_pessoa(loja, form_data, QUESTAO23, QUESTAO24, QUESTAO25)
     valida_pessoa(loja, form_data, QUESTAO26, QUESTAO27, QUESTAO28)
     valida_pessoa(loja, form_data, QUESTAO29, QUESTAO30, QUESTAO31)
-    print(loja)
 
     return loja
 

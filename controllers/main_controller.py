@@ -17,9 +17,9 @@ def index():
     response = {}
     try:
         form_tratado = valida_formulario()
-        # loja = cadastra_banco(form_tratado)
-        # params = monta_params_task(loja)
-        # processa_selo_task.delay(params)
+        loja = cadastra_banco(form_tratado)
+        params = monta_params_task(loja)
+        processa_selo_task.delay(params)
     except Exception as e:
         logger.exception(str(e))
         db.session.rollback()

@@ -9,14 +9,14 @@ env = inicializa_env()
 def valida_certificado(pessoa):
     url = str(env['url_validador'])
 
-    # payload = {
-    #     "nome": pessoa['nome'],
-    #     "codigo": pessoa['certificado']
-    # }
+    payload = {
+        "nome": pessoa['nome'],
+        "codigo": pessoa['certificado']
+    }
 
-    # response = post(url, json=payload)
-    # resultado = (response.json())[0]
-    # print(resultado)
+    response = post(url, json=payload)
+    resultado = (response.json())[0]
+    print(resultado)
 
-    # if resultado == "Código de validação Inválido":
-    #     raise Exception(ERROR10)  # NOSONAR
+    if resultado == "Código de validação Inválido":
+        raise Exception(ERROR10)  # NOSONAR
